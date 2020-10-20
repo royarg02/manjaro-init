@@ -1,0 +1,15 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a device; this may
+# be used with UUID= as a more robust way to name devices that works even if
+# disks are added and removed. See fstab(5).
+#
+# <file system>             <mount point>  <type>  <options>  <dump>  <pass>
+UUID=33FD-E4AE                            /boot/efi      vfat    umask=0077 0 2
+UUID=f70f70ea-d78b-40b8-9cf5-d3490c2218d0 /              ext4    defaults,noatime 0 1
+UUID=44065268-860e-4a75-8efa-41e833b34d32 /home          ext4    defaults,noatime 0 2
+UUID=3de38af1-fc89-4336-865b-c1340800f373 none		 swap	 defaults 0 0
+tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
+UUID=1893BD5B741FC612                     /mnt/D	 ntfs    defaults 0 0
+UUID=4888CDE031BF1FFA			  /mnt/E         ntfs	 defaults 0 0
+UUID=49D007D2239C4886			  /mnt/F         ntfs    defaults 0 0
