@@ -166,3 +166,15 @@ sudo pacman -S xcip
 echo "Installing xfce4-netload-plugin..."
 sudo pacman -S xfce4-netload-plugin
 
+## Install font-manager
+echo "Installing font-manager..."
+sudo pacman -S font-manager
+
+## Install Intellij IDEA
+echo "Installing intellij-idea-community-edition..."
+sudo pacman -S intellij-idea-community-edition
+
+## Install Kotlin
+echo "Installing kotlin..."
+sudo pacman -S kotlin
+
