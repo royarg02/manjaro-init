@@ -13,3 +13,6 @@ systemctl enable powertop.service
 # Enable tor service
 systemctl enable tor.service
 
+# Enable cups service
+sudo systemctl enable --now org.cups.cupsd.service
+
