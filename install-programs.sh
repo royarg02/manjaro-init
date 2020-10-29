@@ -178,3 +178,15 @@ sudo pacman -S intellij-idea-community-edition
 echo "Installing kotlin..."
 sudo pacman -S kotlin
 
+## Install Viewnior
+echo "Installing viewnior..."
+sudo pacman -S viewnior
+
+## Install Manjaro printer
+echo "Installing manjaro-printer..."
+sudo pacman -S manjaro-printer
+
+## Install packages for git send-email
+echo "Installing required packages for git send-email..."
+sudo pacman -Syu --needed git perl-authen-sasl perl-net-smtp-ssl perl-mime-tools
+
