@@ -10,6 +10,9 @@ timedatectl set-local-rtc 1 --adjust-system-clock
 ##
 ## Updates system packages to install user packages later
 
+## Set correct mirror
+sudo pacman-mirrors -c India
+
 ## Update through pacman
-sudo pacman -Syu
+sudo pacman -Syyu
 

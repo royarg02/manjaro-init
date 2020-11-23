@@ -43,3 +43,8 @@ sudo pacman -Rcns qpdfview
 # Uninstall Parole media player
 echo "Uninstalling parole..."
 sudo pacman -Rcns parole
+
+# Uninstall zsh
+echo "Uninstalling zsh..."
+sudo pacman -Rcns zsh
+

@@ -178,9 +178,9 @@ sudo pacman -S intellij-idea-community-edition
 echo "Installing kotlin..."
 sudo pacman -S kotlin
 
-## Install Viewnior
-echo "Installing viewnior..."
-sudo pacman -S viewnior
+## Install Ristretto
+echo "Installing ristretto..."
+sudo pacman -S ristretto
 
 ## Install Manjaro printer
 echo "Installing manjaro-printer..."
@@ -193,4 +193,8 @@ sudo pacman -S --needed git perl-authen-sasl perl-net-smtp-ssl perl-mime-tools
 ## Install GNOME calculator
 echo "Installing gnome-calculator..."
 sudo pacman -S gnome-calculator
+
+## Install Optipng
+echo "Installing optipng..."
+sudo pacman -S optipng
 
