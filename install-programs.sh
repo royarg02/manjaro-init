@@ -76,6 +76,3 @@ installPackages "install_yay.txt" "yay"
 
 ## Install scrcpy.
 ./install_scrcpy.sh
-
-## Load and uninstall packages listed in `uninstall_pacman.txt`
-uninstallPackages "uninstall_pacman.txt"
