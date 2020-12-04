@@ -1,200 +1,81 @@
 #!/usr/bin/env bash
 
-## NEEDS sudo
+### Installs packages listed in following files, in order:
+###
+### * `install_pacman.txt`
+### * `install_pacman_needed.txt`
+### * `install_yay`.txt
+###
+### Then runs `install-scrcpy.sh` to install the scrcpy package.
 
-## Install programs
-##
-## Installs packages upon fresh install
+### Installs the list of packages in a file, using either pacman or yay.
+###
+### By default, uses pacman and installs without `--needed` flag.
+###
+### If [manager] is yay, `--needed` must not be true.
+###
+### Any failure will be reported and the script will quit immediately.
+###
+### Takes the file, the manager, and the --needed flag in order.
+function installPackages {
+  ## Default parameters
+  local manager=${2:-'pacman'}
+  local needed=${3:-false}
 
-## Install vim
+  ## Check for proper arguments
+  if [[ ! -f "$1" ]]
+  then
+    echo -e "\n[ERROR] Couldn't find the file $1. Are you sure it exists in the current directory?\n"
+    exit 1
+  elif [[ $2 =~ "^(yay|pacman)" ]]
+  then
+    echo -e "\n[ERROR] Invalid manager $1. Only \"pacman\" and \"yay\" can be managers.\n"
+    exit 1
+  elif [[ $3 -ne false -o $3 -ne true ]]
+    echo -e "\n[ERROR] Invalid value $3 to --needed flag. Only true or false is allowed.\n"
+    exit 1
+  elif [[ $2 =~ "yay" -a $3 -eq true ]]
+    echo -e "\n[ERROR] Manager and --needed flag cannot be $2 and $3 simultaneously.\n"
+    exit 1
+  fi
 
-# Check whether vim is installed in the first place
-which vim > /dev/null 2>&1
+  local neededFlag
+  if [[ $needed ]]
+  then
+    neededFlag=" --needed"
+  else
+    neededFlag=" "
+  fi
 
-isVimInstalled=$(echo $?)
+  ## Load packages
+  echo -e "\n[INFO] Loading packages listed in $1 to install...\n"
+  packages=($(sed 's/^#.*//g' $1 | tr '\n' ' '))
 
-if [[ isVimInstalled -eq 0 ]]
-then
-  echo "Vim is already installed."
-else
-  echo "Vim is not installed."
-fi
+  ## Install packages
+  for i in "${packages[@]}"
+  do
+  echo -e "\n[INSTALL] Installing $i...\n"
+  sudo "$2" -S"$neededFlag" "$i"
+  ## If installing fails, quit immediately.
+  if [[ $? -eq 1]]
+  then
+    echo -e "\n[ERROR] Something went wrong. Refer to output for possible reasons.\n"
+    exit 1
+  fi
+  done
+}
 
-# Check whether vi is installed
-which vi > /dev/null 2>&1
+## Load and install packages listed in `install_pacman.txt`.
+installPackages "install_pacman.txt"
 
-isViInstalled=$(echo $?)
+## Load and install packages listed in `install_pacman_needed.txt`.
+installPackages "install_pacman_needed.txt" "pacman" true
 
-# If vi is installed, remove vi
-if [[ isViInstalled -eq 0 ]]
-then
-  echo "Vi is installed, uninstalling vi..."
-  sudo pacman -Rcns vi
-else
-  echo "Vi is not installed."
-fi
+## Load and install packages listed in `install_yay.txt`.
+installPackages "install_yay.txt" "yay"
 
-# Install vim
-echo "Installing vim..."
-sudo pacman -S vim
+## Install scrcpy.
+./install_scrcpy.sh
 
-# Create a link of 'vi' to vim
-sudo ln -s /usr/bin/vim /usr/bin/vi
-
-# Create config files, if necessary
-if [[ ! -e ~/.vimrc ]]
-then
-  cp ./user_files/.vimrc ~/
-fi
-
-## Install Neofetch
-echo "Installing neofetch..."
-sudo pacman -S neofetch
-
-## Install Firefox
-echo "Installing firefox..."
-sudo pacman -S firefox
-
-## Install Yay
-echo "Installing yay..."
-sudo pacman -S yay
-
-## Install Chromium
-echo "Installing chromium..."
-sudo pacman -S chromium
-
-## Install Base-devel(for yay)
-echo "Installing base-devel..."
-sudo pacman -S base-devel --needed
-
-## Install Clang
-echo "Installing clang..."
-sudo pacman -S clang
-
-## Install Cmake
-echo "Installing cmake..."
-sudo pacman -S cmake
-
-## Install Ninja
-echo "Installing ninja..."
-sudo pacman -S ninja
-
-## Install xfce4-docklike-plugin
-echo "Installing xfce4-docklike-plugin..."
-yay -S xfce4-docklike-plugin-git
-
-## Install VSCodium
-echo "Installing VSCodium..."
-yay -S vscodium-bin
-
-## Install GIMP
-echo "Installing gimp..."
-sudo pacman -S gimp
-
-## Install ms-fonts
-echo "Installing ttf-ms-fonts..."
-yay -S ttf-ms-fonts
-
-## Install ttf-windows
-echo "installing ttf-windows..."
-yay -S ttf-windows
-
-## Install libreoffice-fresh
-echo "Installing libreoffice-fresh..."
-sudo pacman -S libreoffice-fresh
-
-## Install OBS
-echo "Installing obs-studio..."
-sudo pacman -S obs-studio
-yay -S obs-v4l2sink
-
-## Install Remmina
-echo "Installing Remmina..."
-sudo pacman -S remmina
-
-## Install scrcpy
-echo "Installing scrcpy..."
-currWD=$(pwd)
-cd
-yay -Gf scrcpy
-echo "Opening PKGBUILD to remove android-tools dependency..."
-sleep 5
-cd ./scrcpy
-vi PKGBUILD
-makepkg -si
-sudo pacman -Rcns meson
-cd $currWD
-
-## Install shellcheck
-echo "Installing shellcheck..."
-sudo pacman -S shellcheck
-
-## Install tldr
-echo "installing tldr..."
-sudo pacman -S tldr
-
-## Install transmission
-echo "Installing transmission..."
-sudo pacman -S transmission-gtk
-
-## Install typora
-echo "Installing typora..."
-yay -S typora
-
-## Install VLC
-echo "Installing vlc..."
-sudo pacman -S vlc
-
-## Install steam
-echo "Installing steam..."
-sudo pacman -S steam
-
-## Install tor
-echo "Installing tor..."
-sudo pacman -S tor
-
-## Install optimus-manager
-echo "Installing optimus-manager..."
-yay -S optimus-manager
-yay -S optimus-manager-qt
-
-## Install xclip
-echo "Installing xclip..."
-sudo pacman -S xcip
-
-## Install xfce4-netload-plugin
-echo "Installing xfce4-netload-plugin..."
-sudo pacman -S xfce4-netload-plugin
-
-## Install font-manager
-echo "Installing font-manager..."
-sudo pacman -S font-manager
-
-## Install Intellij IDEA
-echo "Installing intellij-idea-community-edition..."
-sudo pacman -S intellij-idea-community-edition
-
-## Install Kotlin
-echo "Installing kotlin..."
-sudo pacman -S kotlin
-
-## Install Ristretto
-echo "Installing ristretto..."
-sudo pacman -S ristretto
-
-## Install Manjaro printer
-echo "Installing manjaro-printer..."
-sudo pacman -S manjaro-printer
-
-## Install packages for git send-email
-echo "Installing required packages for git send-email..."
-sudo pacman -S --needed git perl-authen-sasl perl-net-smtp-ssl perl-mime-tools
-
-## Install GNOME calculator
-echo "Installing gnome-calculator..."
-sudo pacman -S gnome-calculator
-
-## Install Optipng
-echo "Installing optipng..."
-sudo pacman -S optipng
-
+## Load and uninstall packages listed in `uninstall_pacman.txt`
+uninstallPackages "uninstall_pacman.txt"

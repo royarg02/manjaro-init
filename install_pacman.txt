@@ -1,0 +1,33 @@
+### The following packages will be installed using pacman.
+###
+### sudo pacman -S [package_name]
+###
+### Comment out a specific package using `#` to skip the installation.
+
+vim
+neofetch
+firefox
+chromium
+libreoffice-fresh
+gimp
+obs-studio
+remmina
+shellcheck
+tldr
+transmision-gtk
+vlc
+steam
+tor
+xclip
+xfce4-netload-plugin
+font-manager
+intellij-idea-community-edition
+kotlin
+ristretto
+manjaro-printer
+gnome-calculator
+optipng
+clang
+cmake
+ninja
+yay

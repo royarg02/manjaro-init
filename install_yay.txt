@@ -1,0 +1,19 @@
+### The following packages will be installed using yay.
+###
+### yay -S [package_name] 
+###
+### Comment a specific package using `#` to skip installation.
+###
+### Any attempt to install the following packages before querying 
+### `install_pacman.txt` and `install_pacman_needed.txt` will result 
+### in a failure.
+
+xfce4-docklike-plugin-git
+vscodium-bin
+ttf-ms-fonts
+ttf-windows
+obs-v412sink
+typora
+optimus-manager
+optimus-manager-qt
+ 

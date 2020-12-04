@@ -1,0 +1,19 @@
+### The following packages will be uninstalled using pacman.
+###
+### sudo pacman -Rcns [package_name]
+###
+### Comment out a specific package using `#` to skip uninstallation.
+
+vi
+meson
+gtkhash
+gtkhash-thunar
+manjaro-hello
+manjaro-browser-settings
+manjaro-documentation-en
+android-tools
+midori
+orage
+qpdfview
+parole
+zsh

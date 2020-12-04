@@ -1,50 +1,37 @@
 #!/usr/bin/env bash
 
-##! NEEDS sudo
+### Uninstalls packages listed in `uninstall_pacman.txt`
 
-## Uninstall programs
-##
-## Uninstalls some system programs which are not required
+### Uninstalls the list of packages in a file, using pacman.
+###
+### Any failure will be reported and the script will quit immediately.
+###
+### Takes the file as an argument.
+function uninstallPackages {
+  ## Check for proper arguments
+  if [[ ! -f "$1" ]]
+  then
+    echo -e "\n[ERROR] Couldn't find the file $1. Are you sure it exists in the current directory?\n"
+    exit 1
+  fi
 
-# Uninstall GtkHash
-echo "Uninstalling gtkHash..."
-sudo pacman -Rcns gtkhash
-echo "Uninstalling gtkHash-thunar..."
-sudo pacman -Rcns gtkhash-thunar
+  ## Load packages
+  echo -e "\n[INFO] Loading packages listed in $1 to uninstall...\n"
+  packages=($(sed 's/^#.*//g' $1 | tr '\n' ' '))
 
-# Uninstall Manjaro Hello
-echo "Uninstalling manjaro-hello..."
-sudo pacman -Rcns manjaro-hello
+  ## Uninstall packages
+  for i in "${packages[@]}"
+  do
+  echo -e "\n[UNINSTALL] Uninstalling $i...\n"
+  sudo pacman -Rcns "$i"
+  ## If uninstalling fails, quit immediately.
+  if [[ $? -eq 1]]
+  then
+    echo -e "\n[ERROR] Something went wrong. Refer to output for possible reasons.\n"
+    exit 1
+  fi
+  done
+}
 
-# Uninstall Manjaro browser settings
-echo "Uninstalling manjaro-browser-settings..."
-sudo pacman -Rcns manjaro-browser-settings
-
-# Uninstall Manjaro user guide
-echo "Uninstalling manjaro-documentaion-en..."
-sudo pacman -Rcns manjaro-documentation-en
-
-# Uninstall Android-tools
-echo "Uninstalling android-tools..."
-sudo pacman -Rcns android-tools
-
-# Uninstall Midori
-echo "Uninstalling midori..."
-sudo pacman -Rcns midori
-
-# Uninstall Orage
-echo "Uninstalling orage..."
-sudo pacman -Rcns orage
-
-# Uninstall Qpdfview
-echo "Uninstalling qpdfview..."
-sudo pacman -Rcns qpdfview
-
-# Uninstall Parole media player
-echo "Uninstalling parole..."
-sudo pacman -Rcns parole
-
-# Uninstall zsh
-echo "Uninstalling zsh..."
-sudo pacman -Rcns zsh
-
+## Load and uninstall packages listed in `uninstall_pacman.txt`
+uninstallPackages "uninstall_pacman.txt"

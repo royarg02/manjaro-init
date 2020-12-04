@@ -1,0 +1,14 @@
+### The following packages will be installed if needed using
+### pacman.
+###
+### sudo pacman -S --needed [package_name]
+###
+### Comment out a specific package using `#` to skip installation.
+
+base-devel
+git
+
+### For git send-email
+perl-authen-sasl
+perl-net-smtp-ssl
+perl-mime-tools

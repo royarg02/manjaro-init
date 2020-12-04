@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-## Service startup
-##
-## starts some systemd services after install
+### starts some systemd services after install
 
 # Copy powertop.service from user_files
 sudo cp ./user_files/etc/systemd/system/powertop.service /etc/systemd/system/
@@ -15,4 +13,3 @@ systemctl enable tor.service
 
 # Enable cups service
 sudo systemctl enable --now org.cups.cupsd.service
-
