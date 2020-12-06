@@ -31,3 +31,4 @@ clang
 cmake
 ninja
 yay
+bash-bats

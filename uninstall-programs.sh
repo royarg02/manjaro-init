@@ -17,7 +17,7 @@ function uninstallPackages {
 
   ## Load packages
   echo -e "\n[INFO] Loading packages listed in $1 to uninstall...\n"
-  packages=($(sed 's/^#.*//g' $1 | tr '\n' ' '))
+  packages=($(sed 's/^#.*//g' "$1" | tr '\n' ' '))
 
   ## Uninstall packages
   for i in "${packages[@]}"
@@ -25,7 +25,7 @@ function uninstallPackages {
   echo -e "\n[UNINSTALL] Uninstalling $i...\n"
   sudo pacman -Rcns "$i"
   ## If uninstalling fails, quit immediately.
-  if [[ $? -eq 1]]
+  if [[ $? -eq 1 ]]
   then
     echo -e "\n[ERROR] Something went wrong. Refer to output for possible reasons.\n"
     exit 1
@@ -34,4 +34,4 @@ function uninstallPackages {
 }
 
 ## Load and uninstall packages listed in `uninstall_pacman.txt`
-uninstallPackages "uninstall_pacman.txt"
+uninstallPackages "./package_list/uninstall_pacman.txt"

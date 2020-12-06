@@ -28,5 +28,5 @@ echo -e "\n[INSTALL] Installing scrcpy...\n"
 makepkg -sci
 
 ## Move back to directory we were previously after installation.
-cd $currWD
+cd "$currWD"
 

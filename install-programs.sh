@@ -27,14 +27,16 @@ function installPackages {
   then
     echo -e "\n[ERROR] Couldn't find the file $1. Are you sure it exists in the current directory?\n"
     exit 1
-  elif [[ $2 =~ "^(yay|pacman)" ]]
+  elif [[ $2 =~ ^(yay|pacman) ]]
   then
     echo -e "\n[ERROR] Invalid manager $1. Only \"pacman\" and \"yay\" can be managers.\n"
     exit 1
-  elif [[ $3 -ne false -o $3 -ne true ]]
+  elif [[ $3 -ne false && $3 -ne true ]]
+  then
     echo -e "\n[ERROR] Invalid value $3 to --needed flag. Only true or false is allowed.\n"
     exit 1
-  elif [[ $2 =~ "yay" -a $3 -eq true ]]
+  elif [[ $2 =~ yay && $3 -eq true ]]
+  then
     echo -e "\n[ERROR] Manager and --needed flag cannot be $2 and $3 simultaneously.\n"
     exit 1
   fi
@@ -49,15 +51,15 @@ function installPackages {
 
   ## Load packages
   echo -e "\n[INFO] Loading packages listed in $1 to install...\n"
-  packages=($(sed 's/^#.*//g' $1 | tr '\n' ' '))
+  packages=($(sed 's/^#.*//g' "$1" | tr '\n' ' '))
 
   ## Install packages
   for i in "${packages[@]}"
   do
   echo -e "\n[INSTALL] Installing $i...\n"
-  sudo "$2" -S"$neededFlag" "$i"
+  sudo "$manager" -S"$neededFlag" "$i"
   ## If installing fails, quit immediately.
-  if [[ $? -eq 1]]
+  if [[ $? -eq 1 ]]
   then
     echo -e "\n[ERROR] Something went wrong. Refer to output for possible reasons.\n"
     exit 1
@@ -66,13 +68,14 @@ function installPackages {
 }
 
 ## Load and install packages listed in `install_pacman.txt`.
-installPackages "install_pacman.txt"
+installPackages "./package_list/install_pacman.txt"
 
 ## Load and install packages listed in `install_pacman_needed.txt`.
-installPackages "install_pacman_needed.txt" "pacman" true
+installPackages "./package_list/install_pacman_needed.txt" "pacman" true
 
 ## Load and install packages listed in `install_yay.txt`.
-installPackages "install_yay.txt" "yay"
+installPackages "./package_list/install_yay.txt" "yay"
 
 ## Install scrcpy.
+chmod +x install_scrcpy.sh
 ./install_scrcpy.sh
