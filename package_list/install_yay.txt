@@ -1,12 +1,13 @@
 ### The following packages will be installed using yay.
 ###
-### yay -S [package_name] 
+### yay -S [package_name]
 ###
 ### Comment a specific package using `#` to skip installation.
 ###
-### Any attempt to install the following packages before querying 
-### `install_pacman.txt` and `install_pacman_needed.txt` will result 
-### in a failure.
+### For any of these packages to successfully install, `yay` and
+### `base-devel` must be present. The requirements should be
+### already fulfilled if packages from `install_pacman.txt` and
+### `install_pacman_needed.txt` are installed before.
 
 xfce4-docklike-plugin-git
 vscodium-bin
@@ -16,4 +17,3 @@ obs-v412sink
 typora
 optimus-manager
 optimus-manager-qt
- 

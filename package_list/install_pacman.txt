@@ -32,3 +32,4 @@ cmake
 ninja
 yay
 bash-bats
+figlet
