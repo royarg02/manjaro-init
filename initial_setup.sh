@@ -1,11 +1,8 @@
 #!/usr/bin/env sh
 
 ## Check for root user
-if [ "$(id -u)" -ne 0 ]
-then
-    echo "[ERROR] Initial setup requires root access to run properly."
-    exit 1
-fi
+[ "$(id -u)" -ne 0 ] && \
+echo "[ERROR] Initial setup requires root access to run properly." && exit 1
 
 ## Set time correctly
 echo "[INFO] Setting system time correctly..."

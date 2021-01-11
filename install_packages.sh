@@ -43,8 +43,6 @@ usage() {
 
 [ -r ./regex_match.sh ] && . ./regex_match.sh || exit 1
 
-unset MANAGER NEEDED FILE SHOW_CONFIRMATION
-
 NEEDED=''
 SHOW_CONFIRMATION=0     #true
 
@@ -60,14 +58,10 @@ do
 done
 
 ## If no arguments are supplied, display usage
-if [ "$OPTIND" -eq 1 ]
-then
-   usage
-fi
-
+[ "$OPTIND" -eq 1 ] && usage
 
 ## Default parameters
-MANAGER=${MANAGER:-'pacman'}
+${MANAGER:='pacman'}
 
 ## Check for proper arguments
 if [ ! -f "$FILE" ]
@@ -81,10 +75,7 @@ then
 fi
 
 ## Ignore the -n flag if manager is yay
-if regex_match "$MANAGER" 'yay' && regex_match "$NEEDED" '--needed'
-then
-    NEEDED=''
-fi
+regex_match "$MANAGER" 'yay' && regex_match "$NEEDED" '--needed' && NEEDED=''
 
 ## Load packages
 echo "[INFO] Loading packages listed in \"$FILE\" to install..."
@@ -112,12 +103,13 @@ do
     echo
     "$MANAGER" -S"$NEEDED" "$i"
     ## If installing fails, quit immediately.
-    if [ $? -eq 1 ]
-    then
-        echo "[ERROR] Something went wrong. Refer to output for possible reasons."
-        exit 1
-    fi
+    [ $? -eq 1 ] && \
+    echo "[ERROR] Something went wrong. Refer to output for possible reasons." \
+    && exit 1
 done
 
 echo "[INFO] Install finished successfully."
+
+unset MANAGER NEEDED FILE SHOW_CONFIRMATION
+unset -f usage regex_match
 exit 0

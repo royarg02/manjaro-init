@@ -25,14 +25,11 @@ Running the script does the following operations:
 
 ## Package list
 
-The list of packages are present in files in the `package_list` directory. Packages can be added, or removed, as your wish:
+The list of packages are present in files in the `package_list` directory. Packages can be added, or removed, as per your wish:
 
 - `./package_list/install_pacman.txt`: List of packages to be installed using pacman (`pacman -S <package_name>`).
-
 - `./package_list/install_pacman_needed.txt`: List of packages which would be only installed if out of date (`pacman -S --needed <package_name>`).
-
 - `./package_list/install_yay.txt`: List of packages to be installed using yay (`yay -S <package_name>`).
-
 - `./package_list/uninstall_pacman.txt`: List of packages to be uninstalled using pacman (`pacman -Rcns <package_name>`).
 
 ## Install/Uninstall packages only
@@ -42,9 +39,7 @@ As stated above, the script does some additional functions other than just insta
 ## Caveats
 
 - `yay` cannot be run as root. As such, the script may ask for root privileges _multiple_ times, specifically everytime when `pacman` runs.
-
 - The scripts do not have any tests. I'm currently in the process of figuring out the best way.
-
-- The `user_files` contain some user specific files(including some dotfiles), of which only one is automated by the script. The rest have to be manually copied according the path: `./user_files/etc/profile.d/motd.sh` can be copied as `/etc/profile.d/motd.sh`.
-
-- The `copy_files.sh` script is supposed to automate the above operation. Currently it does nothing.
+- ~~The `user_files` contain some user specific files(including some dotfiles), of which only one is automated by the script. The rest have to be manually copied according the path: `./user_files/etc/profile.d/motd.sh` can be copied as `/etc/profile.d/motd.sh`.~~
+- ~~The `copy_files.sh` script is supposed to automate the above operation. Currently it does nothing.~~
+- The [user_files](https://github.com/RoyARG02/user-files) repository deploys user files.

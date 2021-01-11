@@ -21,8 +21,6 @@ usage() {
 
 [ -r ./regex_match.sh ] && . ./regex_match.sh || exit 1
 
-unset FILE SHOW_CONFIRMATION
-
 SHOW_CONFIRMATION=0     #true
 
 while getopts ":yf:" opt
@@ -35,17 +33,11 @@ do
 done
 
 ## If no arguments are supplied, display usage
-if [ "$OPTIND" -eq 1 ]
-then
-   usage
-fi
+[ "$OPTIND" -eq 1 ] && usage
 
 ## Check for proper arguments
-if [ ! -f "$FILE" ]
-then
-    echo "[ERROR] Couldn't find the file \"$FILE\". Are you sure it exists?"
-    exit 1
-fi
+[ ! -f "$FILE" ] && \
+echo "[ERROR] Couldn't find the file \"$FILE\". Are you sure it exists?" && exit 1
 
 ## Load packages
 echo "[INFO] Loading packages listed in \"$FILE\" to uninstall..."
@@ -74,20 +66,18 @@ do
     ## Query pacman to find the package. If it doesn't exist in the first place,
     ## skip this iteration
     pacman -Q "$i" >/dev/null 2>&1
-    if [ $? -eq 1 ]
-    then
-        echo "[INFO] Couldn't find package $i. Skipping..."
-        continue
-    fi
+    [ $? -eq 1 ] && echo "[INFO] Couldn't find package $i. Skipping..." && \
+    continue
 
     pacman -Rcns "$i"
     ## If uninstalling fails, quit immediately.
-    if [ $? -eq 1 ]
-    then
-        echo "[ERROR] Something went wrong. Refer to output for possible reasons."
-        exit 1
-    fi
+    [ $? -eq 1 ] && \
+    echo "[ERROR] Something went wrong. Refer to output for possible reasons." \
+    && exit 1
 done
 
 echo "[INFO] Uninstall finished successfully."
+
+unset FILE SHOW_CONFIRMATION
+unset -f usage regex_match
 exit 0

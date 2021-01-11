@@ -3,11 +3,9 @@
 ### Uninstalls packages listed in `uninstall_pacman.txt`
 
 ## Check for root user
-if [ "$(id -u)" -ne 0 ]
-then
-    echo "[ERROR] Uninstalling packages requires root access to run properly."
-    exit 1
-fi
+[ "$(id -u)" -ne 0 ] && \
+echo "[ERROR] Uninstalling packages requires root access to run properly." && \
+exit 1
 
 ### Source `uninstall_packages.sh`
 [ -r ./uninstall_packages.sh ] && . ./uninstall_packages.sh || exit 1
