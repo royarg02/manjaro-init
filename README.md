@@ -1,4 +1,8 @@
-# manjaro-init
+# Obsolete and archived: I don't use manjaro anymore
+
+My dotfiles can be found at https://github.com/RoyARG02/user_files.
+
+***
 
 POSIX-compliant shell scripts that configure a fresh **Manjaro** install.
 
@@ -40,6 +44,4 @@ As stated above, the script does some additional functions other than just insta
 
 - `yay` cannot be run as root. As such, the script may ask for root privileges _multiple_ times, specifically everytime when `pacman` runs.
 - The scripts do not have any tests. I'm currently in the process of figuring out the best way.
-- ~~The `user_files` contain some user specific files(including some dotfiles), of which only one is automated by the script. The rest have to be manually copied according the path: `./user_files/etc/profile.d/motd.sh` can be copied as `/etc/profile.d/motd.sh`.~~
-- ~~The `copy_files.sh` script is supposed to automate the above operation. Currently it does nothing.~~
-- The [user_files](https://github.com/RoyARG02/user-files) repository deploys user files.
+- The [user_files](https://github.com/RoyARG02/user_files) repository deploys user files.
